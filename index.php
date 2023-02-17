@@ -305,6 +305,11 @@ switch (ENVIRONMENT)
 
 	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
 
+	/*Custome Variable*/
+	define('USER_TYPE', 'tbl_usertype');
+	define('USER', 'tbl_user');
+	define('FLAT', 'tbl_flat');
+	define('VISITOR', 'tbl_visitor');
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
