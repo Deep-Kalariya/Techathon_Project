@@ -58,12 +58,16 @@ $route['logout'] = "Login_Controller/logout";
 $route['dashboard'] = "Dashboard_Controller/index";
 
 $route['visitors'] = "Visitor_Controller/index";
+$route['visitors/list'] = "Visitor_Controller/visitors_list";
 $route['visitors/add'] = "Visitor_Controller/add_visitor";
+$route['visitor/edit/(:any)'] = "Visitor_Controller/edit_visitor/$1";
+$route['visitor/delete'] = "Visitor_Controller/delete_visitor";
 
 $route['users'] = "User_Controller/index";
 $route['users/list'] = "User_Controller/users_list";
 $route['user/add'] = "User_Controller/add_user";
-$route['user/edit'] = "User_Controller/add_user";
+$route['user/edit/(:any)'] = "User_Controller/edit_user/$1";
+$route['user/delete'] = "User_Controller/delete_user";
 
 $route['user-types'] = "Settings_Controller/index";
 $route['user-types/list'] = "Settings_Controller/user_types_list";

@@ -35,7 +35,7 @@
 	<!--end::Layout Themes-->
 	<link rel="shortcut icon" href="<?php echo base_url('assets/media/logo/favicon.ico'); ?>" />
 	<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
-	<!-- <?php 
+	<?php 
 		if($link != ""){
 			foreach ($link as $value) {
 			?>
@@ -43,7 +43,7 @@
 			<?php 
 			}
 		}
-	?>	 -->
+	?>	
 	<style type="text/css">
 		select,input::-webkit-outer-spin-button,
 		input::-webkit-inner-spin-button {
@@ -69,8 +69,8 @@
 	<!--begin::Main-->
 	<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 		<!--begin::Logo-->
-		<a href="<?php echo site_url('dashboard'); ?>">
-			<img alt="Logo" src="<?php echo base_url('assets/media/logo/header.png') ?>" />
+		<a href="<?php echo site_url('dashboard'); ?>" style="max-width: 50%;">
+			<img alt="Logo" src="<?php echo base_url('assets/media/logo/header.png') ?>" class="bg-white img-fluid" />
 		</a>
 		<!--end::Logo-->
 		<!--begin::Toolbar-->
@@ -98,9 +98,9 @@
 				<!--begin::Brand-->
 				<div class="brand flex-column-auto" id="kt_brand">
 					<!--begin::Logo-->
-					<a href="<?php echo site_url('dashboard'); ?>" class="brand-logo mr-auto d-flex justify-content-center">
-						 <!-- <img alt="Logo" src="<?php echo base_url('assets/media/logo/header.png') ?>" /> -->
-						 <h1 class="text-white">Infinity Visit</h1>
+					<a href="<?php echo site_url('dashboard'); ?>" class="brand-logo mr-auto d-flex justify-content-center p-5 pl-0">
+						 <img alt="Logo" src="<?php echo base_url('assets/media/logo/header.png') ?>" class="img-fluid bg-white" />
+						 <!-- <h1 class="text-white">Infinity Visit</h1> -->
 					</a>
 					<!--end::Logo-->
 					<!--begin::Toggle-->

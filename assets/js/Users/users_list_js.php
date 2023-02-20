@@ -52,7 +52,7 @@ var Button = function() {
                 { data: 'Name' },
                 { data: 'Mobile' },
                 { data: 'Email' },
-                { data: 'Flate Id' },
+                { data: 'Flat Id' },
                 { data: 'Working Time' },
                 { data: 'Shift' },
                 { data: 'Create Date' },
@@ -135,12 +135,10 @@ var Button = function() {
                                         <a onClick="Button.deleteUser(' + data + ')" title="Delete User" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Delete</span></a>\
                                         </li>\
                                         <li class="nav-item">\
-                                        <a href="users/edit/' + data + '" title="Edit User" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Edit</span></a>\
+                                        <a href="user/edit/' + data + '" title="Edit User" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Edit</span></a>\
                                         </li>\
                                     </ul>\
                                 </div>';
-                        // var html ='<a onClick="Button.deleteUser(' + data + ')" title="Delete User" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Delete User</span>';
-                        // html = html + '<a title="Edit User" href="users/edit/' + data + '" class="btn btn-icon btn-sm btn-light-primary mr-2"><i class="flaticon2-edit"></i></a>';
                         return html;
                     },
                 },
@@ -149,11 +147,11 @@ var Button = function() {
 
 	};
 
-    var deleteUsers = function(id) {
+    var deleteUser = function(id) {
         var id = id;
         Swal.fire({
                 title: "Are you sure?",
-                text: "You want to delete this option?",
+                text: "You want to delete this user?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
@@ -162,7 +160,7 @@ var Button = function() {
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: "option/delete",
+                        url: "user/delete",
                         type: 'POST',
                         dataType: 'JSON',
                         data: { id:id },
@@ -174,7 +172,7 @@ var Button = function() {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                                $('#List_of_Options').DataTable().ajax.reload();
+                                $('#List_of_Users').DataTable().ajax.reload();
                             }
                             else{
                                 Swal.fire({
@@ -196,8 +194,8 @@ var Button = function() {
 		init: function() {
 			users_table();
 		},
-        deleteUsers: function(id) {
-            deleteUsers(id);  
+        deleteUser: function(id) {
+            deleteUser(id);  
         },
 	};
 }();

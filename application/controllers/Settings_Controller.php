@@ -41,7 +41,7 @@ class Settings_Controller extends CI_Controller {
 	{
 		if($this->session->userdata('user')){
 			$data['title'] = "Infinity Visit | Add User Type";
-			$link['link'] = array();
+			$data['link'] = "";
 			$script['script'] = array(
 				'assets/js/Settings/add_user_type_js.php'
 			);

@@ -11,7 +11,10 @@
                         <i class="flaticon2-cross"></i>
                     </a>
                     <!--begin::Page Title-->
-                    <h5 class="text-dark font-weight-bold my-1 mr-5">Add User</h5>
+                    <h5 class="text-dark font-weight-bold my-1 mr-5">
+                        <?php echo (strpos(current_url(), 'add')) ? "Add User" : "Edit User"; 
+                        ?>
+                    </h5>
                     <!--end::Page Title-->
                 </div>
                 <!--end::Page Heading-->
@@ -27,42 +30,66 @@
             <!--begin::Card-->
             <div class="card card-custom">
                 <!--begin::Form-->
-                <form method="POST" id="add_user_form">
-                    <input type="hidden" name="id" id="id" value="">
+                <form method="POST" id="add_edit_user_form">
+                    <input type="hidden" name="id" id="id" value="<?= (strpos(current_url(), 'edit')) ? (($userData->userid != '') ? $userData->userid : -1) : -1; ?>">
                     <div class="card-body">
                         <div class="form-group row">                            
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" maxlength="50" />
+                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" value="<?= (strpos(current_url(), 'edit')) ? (($userData->name != '') ? $userData->name : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>City</label>
-                                <input type="text" class="form-control" name="city" id="city" placeholder="Enter City" maxlength="50" />
+                                <label>Email</label>
+                                <input type="text" class="form-control" name="email" id="email" placeholder="Enter Email" value="<?= (strpos(current_url(), 'edit')) ? (($userData->email != '') ? $userData->email : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Contact Number</label>
-                                <input type="number" pattern="/^-?\d+\.?\d*$/" onkeypress="if(this.value.length==10) return false;" class="form-control" name="mobile" id="mobile" placeholder="Enter Contact Number"/>
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onkeypress="if(this.value.length==10) return false;" class="form-control" name="mobile" id="mobile" placeholder="Enter Contact Number" value="<?= (strpos(current_url(), 'edit')) ? (($userData->mobileNo != '') ? $userData->mobileNo : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" maxlength="20" minlength="6" />
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" value="<?= (strpos(current_url(), 'edit')) ? (($userData->password != '') ? $userData->password : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>User Type</label>
-                                <select class="form-control" id="user_type" name="user_type" style="-webkit-appearance: none;">
-                                    <option label="">Select User Type</option>
-                                    <option value="0">Admin</option>
-                                    <option value="1">User</option>
+                                <select class="form-control" id="user_type" name="user_type">
+                                    <option label="">Select Type</option>
+                                    <?php
+                                    $data = $this->Custom_model->getRows(USER_TYPE);
+                                    foreach ($data as $value) {
+                                    ?>
+                                        <option value="<?= $value->userTypeId; ?>"><?= $value->name; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>Address</label>
-                                <textarea class="form-control" name="address" id="address" placeholder="Enter Address" rows="3" maxlength="200"></textarea>
+                                <label>Flat No</label>
+                                <select class="form-control" id="flat_no" name="flat_no">
+                                    <option label="">Select Flat</option>
+                                    <?php
+                                    $data = $this->Custom_model->getRows(FLAT);
+                                    foreach ($data as $value) {
+                                    ?>
+                                        <option value="<?= $value->flatid; ?>"><?= $value->flatNo; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Working Time</label>
+                                <input type="time" class="form-control" name="working_time" id="working_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->workingTime != '') ? $userData->workingTime : '') : ''; ?>" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Shift</label>
+                                <select class="form-control" id="shift" name="shift">
+                                    <option label="">Select Shift</option>
+                                    <option value="Morning">Morning</option>
+                                    <option value="Afternoon">Afternoon</option>
+                                </select>
                             </div>
                         </div>
                         <div class="text-right">
                             <button id="reset" type="reset" class="btn btn-secondary btn-lg font-weight-bold px-10" name="reset">Cancel</button>
-                            <button id="submitbtn" class="btn btn-primary btn-lg px-10 font-weight-bold" name="submitbtn">Add</button>
+                            <button id="submitbtn" class="btn btn-primary btn-lg px-10 font-weight-bold" name="submitbtn"><?= (strpos(current_url(), 'edit')) ? 'Update' : 'Add'; ?></button>
                         </div>
                     </div>
                 </form>
@@ -75,3 +102,13 @@
     <!--end::Entry-->
 </div>
 <!--end::Content-->
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        <?php if(strpos(current_url(), 'edit')): ?>
+            $('#user_type').val(<?= $userData->userTypeId; ?>);
+            $('#flat_no').val(<?= $userData->flatId; ?>);
+            $('#shift').val('<?= $userData->shift; ?>');
+        <?php endif; ?>
+    });
+</script>
