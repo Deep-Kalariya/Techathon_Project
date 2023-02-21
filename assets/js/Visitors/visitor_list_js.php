@@ -2,10 +2,10 @@
 var table;
 var Button = function() {
 
-	var option_table = function() {
+	var visitor_table = function() {
 
 		// begin first table
-		table = $('#List_of_Options').DataTable({
+		table = $('#List_of_Visitors').DataTable({
 			responsive: true,
             dom: `<'row'<'col-sm-4 text-left'f><'col-sm-8 text-md-right text-center'B>>
             <'row'<'col-sm-12'tr>>
@@ -46,48 +46,77 @@ var Button = function() {
             serverSide: true,
             serverMethod: 'post',
 			ajax: {
-				url: "option/list",
+				url: "visitors/list",
 			},
             columns: [
-                { data: 'Name' },
+                { data: 'Visitor Name' },
+                { data: 'Whom To Meet' },
+                { data: 'No of Visitor' },
+                { data: 'Purpose' },
                 { data: 'Photo' },
-                { data: 'Create Date' },
+                { data: 'Entry Time' },
+                { data: 'Visited Date' },
                 { data: 'Id' }
             ],
             columnDefs: [
                 {
                     targets: 0,
-                    width:'50px',
-                    title: 'Name',
-                    orderable: true,
-                    // render: function (data, type, full, meta) {
-                    //     return '<a class="nav-link" href="user/details/' + full.Id + '" style="cursor: pointer;">' + data + '</a>';
-                    // },
+                    title: 'Visitor Name',
+                    orderable: true
                 },
                 {
                     targets: 1,
-                    width: '100px',
-                    title: 'Photo',
-                    orderable: true,
-                    render: function (data, type, full, meta) {
-                        return '<img class="img-fluid" src="'+base_url('upload/'+data)+'" />';
-                    }
+                    title: 'Whom To Meet',
+                    orderable: false,
                 },
                 {
                     targets: 2,
-                    width:'50px',
-                    title: 'Create Date',
-                    orderable: true,
+                    title: 'No of Visitor',
+                    orderable: false,
                 },
                 {
                     targets: 3,
+                    title: 'Purpose',
+                    orderable: false,
+                },
+                {
+                    targets: 4,
+                    title: 'Photo',
+                    orderable: false,
+                    render: function (data, type, full, meta) {
+                        return '<img class="img-fluid" src="<?= base_url('assets/upload/'); ?>'+ data +'" />';
+                    }
+                },
+                {
+                    targets: 5,
+                    title: 'Entry Time',
+                    orderable: false,
+                },
+                {
+                    targets: 6,
+                    title: 'Visited Date',
+                    orderable: true,
+                },
+                {
+                    targets: 7,
                     orderable: false,
                     width:'100px',
                     title: 'Actions',
                     render: function(data, type, full, meta){
-                        // var html = '<a onClick="Button.deleteUser(' + data + ')" title="Delete User" class="btn btn-icon btn-sm btn-light-primary mr-2"><i class="flaticon2-trash"></i></a>\
-                        var html ='<a onClick="Button.deleteOption(' + data + ')" title="Delete Option" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Delete</span>';
-                        // html = html + '<a title="Edit User" href="home/edit/' + data + '" class="btn btn-icon btn-sm btn-light-primary mr-2"><i class="flaticon2-edit"></i></a>';
+                        var html ='<div class="dropdown dropdown-inline">\
+                                <button class="btn btn-icon btn-sm btn-light-primary mr-2" data-toggle="dropdown">\
+                                    <i class="flaticon-more"></i>\
+                                </button>\
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">\
+                                    <ul class="nav nav-hoverable flex-column">\
+                                        <li class="nav-item">\
+                                        <a onClick="Button.deleteVisitor(' + data + ')" title="Delete Visitor" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Delete</span></a>\
+                                        </li>\
+                                        <li class="nav-item">\
+                                        <a href="visitor/edit/' + data + '" title="Edit Visitor" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Edit</span></a>\
+                                        </li>\
+                                    </ul>\
+                                </div>';
                         return html;
                     },
                 },
@@ -96,11 +125,11 @@ var Button = function() {
 
 	};
 
-    var deleteOption = function(id) {
+    var deleteVisitor = function(id) {
         var id = id;
         Swal.fire({
                 title: "Are you sure?",
-                text: "You want to delete this option?",
+                text: "You want to delete this visitor?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
@@ -109,7 +138,7 @@ var Button = function() {
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: "option/delete",
+                        url: "visitor/delete",
                         type: 'POST',
                         dataType: 'JSON',
                         data: { id:id },
@@ -121,7 +150,7 @@ var Button = function() {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                                $('#List_of_Options').DataTable().ajax.reload();
+                                $('#List_of_Visitors').DataTable().ajax.reload();
                             }
                             else{
                                 Swal.fire({
@@ -141,10 +170,10 @@ var Button = function() {
 
 		//main function to initiate the module
 		init: function() {
-			option_table();
+			visitor_table();
 		},
-        deleteOption: function(id) {
-            deleteOption(id);  
+        deleteVisitor: function(id) {
+            deleteVisitor(id);  
         },
 	};
 }();

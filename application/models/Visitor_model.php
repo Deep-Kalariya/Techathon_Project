@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_model extends CI_Model {
+class Visitor_model extends CI_Model {
 
-   function getUsers($postData=null){
+   function getVisitors($postData=null){
 
      $response = array();
 
@@ -18,12 +18,12 @@ class User_model extends CI_Model {
         $columnName = 'visitorName';
      }
      else {
-        $columnName = 'createdDate';
+        $columnName = 'visitedDate';
      }
      ## Search 
      $searchQuery = "";
      if($searchValue != ''){
-        $searchQuery = " (visitorName like '%".$searchValue."%' or createdDate like '%".$searchValue."%') ";
+        $searchQuery = " (visitorName like '%".$searchValue."%' or visitedDate like '%".$searchValue."%') ";
      }
 
      ## Total number of records without filtering
@@ -52,16 +52,18 @@ class User_model extends CI_Model {
         $userName = $this->Custom_model->getSingleValue(USER,'name','userid = '.$record->userid);
         $flatNo = $this->Custom_model->getSingleValue(FLAT,'flatNo','flatNo = '.$record->flatid);
         $data[] = array( 
-           "Id"=>$record->userid,
+           "Id"=>$record->id,
            "Flat No"=>$flatNo,
            "User"=>$userName,
-           "Name"=>$record->name,
+           "Visitor Name"=>$record->visitorName,
            "Mobile"=>$record->mobileNo,
-           "Email"=>$record->email,
-           "Working Time"=>$record->workingTime,
-           "Shift"=>$record->shift,
-           "Create Date"=>date("d-m-Y", strtotime($record->createdDate)),
-           "Login Date"=>date("d-m-Y", strtotime($record->loginDate))
+           "Address"=>$record->address,
+           "No of Visitor"=>$record->noOfVisitor,
+           "Purpose"=>$record->purpose,
+           "Whom To Meet"=>$record->whomToMeet,
+           "Photo"=>$record->photo,
+           "Visited Date"=>date("d-m-Y", strtotime($record->visitedDate)),
+           "Entry Time"=>date("d-m-Y h:i:s", strtotime($record->entryTime))
         ); 
      }
 

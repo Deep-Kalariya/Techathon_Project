@@ -124,7 +124,6 @@ var Button = function() {
                     width:'100px',
                     title: 'Actions',
                     render: function(data, type, full, meta){
-                        // var html = '<a onClick="Button.deleteUser(' + data + ')" title="Delete User" class="btn btn-icon btn-sm btn-light-primary mr-2"><i class="flaticon2-trash"></i></a>\
                         var html = '<div class="dropdown dropdown-inline">\
                                 <button class="btn btn-icon btn-sm btn-light-primary mr-2" data-toggle="dropdown">\
                                     <i class="flaticon-more"></i>\

@@ -18,10 +18,13 @@ class Dashboard_Controller extends CI_Controller {
 		$data['script_link'] = array(
 			'assets/plugins/custom/datatables/datatables.bundle.js'
 		);
-			
+		$count['total_visitors'] = $this->Custom_model->getTotalCount(VISITOR);
+		$count['total_flats'] = $this->Custom_model->getTotalCount(FLAT);
+		$count['total_users'] = $this->Custom_model->getTotalCount(USER);
+		$count['total_user_types'] = $this->Custom_model->getTotalCount(USER_TYPE);
 		if ($this->session->userdata('user')) {
             $this->load->view('header_footer/header',$data);
-			$this->load->view('Dashboard/dashboard');
+			$this->load->view('Dashboard/dashboard',$count);
 			$this->load->view('header_footer/footer');
         }
         else{

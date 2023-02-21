@@ -11,7 +11,10 @@
                         <i class="flaticon2-cross"></i>
                     </a>
                     <!--begin::Page Title-->
-                    <h5 class="text-dark font-weight-bold my-1 mr-5">Add Visitors</h5>
+                    <h5 class="text-dark font-weight-bold my-1 mr-5">
+                        <?php echo (strpos(current_url(), 'add')) ? "Add Visitor" : "Edit Visitor"; 
+                        ?>
+                    </h5>
                     <!--end::Page Title-->
                 </div>
                 <!--end::Page Heading-->
@@ -27,42 +30,80 @@
             <!--begin::Card-->
             <div class="card card-custom">
                 <!--begin::Form-->
-                <form method="POST" id="add_user_form">
-                    <input type="hidden" name="id" id="id" value="">
+                <form method="POST" id="add_visitor_form" enctype="multipart/form-data">
+                    <input type="hidden" name="id" id="id" value="<?= (strpos(current_url(), 'edit')) ? (($userData->id != '') ? $userData->id : -1) : -1; ?>">
                     <div class="card-body">
                         <div class="form-group row">                            
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>Name</label>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" maxlength="50" />
+                                <?php if(strpos(current_url(), 'add')){ ?>
+                                    <label>Photo</label><br>
+                                    <input type="file" class="form-control" name="photo" id="photo" />
+                                <?php }else{ ?>
+                                            <label>Photo</label><br>
+                                            <label for="photo" class="btn btn-primary form-control-sm"><?= (strpos(current_url(), 'edit')) ? 'Update Image' : 'Select Image'; ?></label>
+                                            <label><?= (strpos(current_url(), 'edit')) ? (($userData->photo != '') ? $userData->photo : '') : ''; ?></label>
+                                            <input type="file" class="form-control" style="visibility: hidden;" name="photo" id="photo" />
+                                <?php } ?>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3 d-flex justify-content-center">
+                                <img src="<?= base_url().'assets/upload/'; ?><?= (strpos(current_url(), 'edit')) ? (($userData->photo != '') ? $userData->photo : '') : ''; ?>" class="img-fluid <?= (strpos(current_url(), 'add')) ? 'd-none' : ''; ?>" width="50%">
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>City</label>
-                                <input type="text" class="form-control" name="city" id="city" placeholder="Enter City" maxlength="50" />
+                                <label>Visitor Name</label>
+                                <input type="text" class="form-control" name="visitor_name" id="visitor_name" placeholder="Enter Visitor Name" value="<?= (strpos(current_url(), 'edit')) ? (($userData->visitorName != '') ? $userData->visitorName : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Contact Number</label>
-                                <input type="number" pattern="/^-?\d+\.?\d*$/" onkeypress="if(this.value.length==10) return false;" class="form-control" name="mobile" id="mobile" placeholder="Enter Contact Number"/>
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onkeypress="if(this.value.length==10) return false;" class="form-control" name="mobile" id="mobile" placeholder="Enter Contact Number" value="<?= (strpos(current_url(), 'edit')) ? (($userData->mobileNo != '') ? $userData->mobileNo : '') : ''; ?>" />
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>Password</label>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" maxlength="20" minlength="6" />
+                            <div class="col-lg-4 col-md-6 col-sm-12 py-3">
+                                <label>No of Visitor</label>
+                                <input type="number" pattern="/^-?\d+\.?\d*$/" onkeypress="if(this.value.length==10) return false;" class="form-control" name="no_of_visitor" id="no_of_visitor" placeholder="Enter No of Visitor" value="<?= (strpos(current_url(), 'edit')) ? (($userData->noOfVisitor != '') ? $userData->noOfVisitor : '') : ''; ?>" />
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>User Type</label>
-                                <select class="form-control" id="user_type" name="user_type" style="-webkit-appearance: none;">
-                                    <option label="">Select User Type</option>
-                                    <option value="0">Admin</option>
-                                    <option value="1">User</option>
+                            <div class="col-lg-4 col-md-6 col-sm-12 py-3">
+                                <label>Whom To Meet</label>
+                                <input type="text" class="form-control" name="whom_to_meet" id="whom_to_meet" placeholder="Enter Whom to Meet" value="<?= (strpos(current_url(), 'edit')) ? (($userData->whomToMeet != '') ? $userData->whomToMeet : '') : ''; ?>" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 py-3">
+                                <label>Flat No</label>
+                                <select class="form-control" id="flat_no" name="flat_no">
+                                    <option label="">Select Flat</option>
+                                    <?php
+                                    $data = $this->Custom_model->getRows(FLAT);
+                                    foreach ($data as $value) {
+                                    ?>
+                                        <option value="<?= $value->flatid; ?>"><?= $value->flatNo; ?></option>
+                                    <?php } ?>
                                 </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Purpose</label>
+                                <textarea class="form-control" name="purpose" id="purpose" placeholder="Enter Purpose" rows="3" maxlength="200"></textarea>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Address</label>
                                 <textarea class="form-control" name="address" id="address" placeholder="Enter Address" rows="3" maxlength="200"></textarea>
                             </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Entry Time</label>
+                                <input type="time" class="form-control" name="entry_time" id="entry_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->entryTime != '') ? date('h:i', strtotime($userData->entryTime)) : date('h:i')) : date('h:i'); ?>" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Exit Time</label>
+                                <input type="time" class="form-control" name="exit_time" id="exit_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->exitTime != '') ? date('h:i', strtotime($userData->exitTime)) : '') : ''; ?>" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Out Time</label>
+                                <input type="time" class="form-control" name="out_time" id="out_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->outTime != '') ? date('h:i', strtotime($userData->outTime)) : '') : ''; ?>" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Visited Date</label>
+                                <input type="date" class="form-control" name="visited_date" id="visited_date" value="<?= (strpos(current_url(), 'edit')) ? (($userData->visitedDate != '') ? $userData->visitedDate : date('Y-m-d', time())) : date('Y-m-d', time()); ?>" />
+                            </div>
                         </div>
                         <div class="text-right">
                             <button id="reset" type="reset" class="btn btn-secondary btn-lg font-weight-bold px-10" name="reset">Cancel</button>
-                            <button id="submitbtn" class="btn btn-primary btn-lg px-10 font-weight-bold" name="submitbtn">Add</button>
+                            <button id="submitbtn" class="btn btn-primary btn-lg px-10 font-weight-bold" name="submitbtn"><?= (strpos(current_url(), 'edit')) ? 'Update' : 'Add'; ?></button>
                         </div>
                     </div>
                 </form>
@@ -75,3 +116,12 @@
     <!--end::Entry-->
 </div>
 <!--end::Content-->
+
+<script type="text/javascript">
+    <?php if(strpos(current_url(), 'edit')): ?>
+        $('#flat_no').val(<?= $userData->flatid; ?>);
+        $('#purpose').html('<?= $userData->purpose; ?>');
+        $('#address').html('<?= $userData->address; ?>');
+        
+    <?php endif; ?>
+</script>

@@ -1,10 +1,10 @@
 <script type="text/javascript">
-var add_option_form;
-var Option = function () {
+var add_visitor_form;
+var Visitor = function () {
 	// Private functions
-	var addoption = function() {
-		add_option_form = FormValidation.formValidation(
-			document.getElementById('add_option_form'),
+	var addvisitor = function() {
+		add_visitor_form = FormValidation.formValidation(
+			document.getElementById('add_visitor_form'),
 			{
 				fields: {
 					name: {
@@ -39,23 +39,26 @@ var Option = function () {
 	return {
 		// public functions
 		init: function() {
-			addoption();
+			addvisitor();
 		}
 	};
 }();
 
 jQuery(document).ready(function() {
-	Option.init();
+	Visitor.init();
 	$('#submitbtn').on('click', function(e) {
 		e.preventDefault();
-		add_option_form.validate().then(function (state) {
+		add_visitor_form.validate().then(function (state) {
 			if (state == "Valid") {
-				var form_data = $('#add_option_form').serialize();
+				var form_data = new FormData($('#add_visitor_form')[0]);
 				$.ajax({
-					url: "<?php echo site_url('Option_Controller/add_edit_option'); ?>",
+					url: "<?php echo site_url('Visitor_Controller/add_edit_visitor'); ?>",
 					type: 'POST',
 					dataType: 'JSON',
-					data: form_data,					
+					data: form_data,
+					contentType: false,
+					cache: false,
+					processData: false,					
 					success: function (response) {
 						if (response.success) {
 		                    Swal.fire({
@@ -67,7 +70,7 @@ jQuery(document).ready(function() {
 				         	setTimeout(
 				         	  function() 
 				         	  {
-				         	    window.location.href = "<?php echo base_url('option'); ?>";
+				         	    window.location.href = "<?php echo base_url('visitors'); ?>";
 				         	  }, 1000);
 						}else{
 							Swal.fire({
