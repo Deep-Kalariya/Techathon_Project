@@ -9,7 +9,7 @@ class Login_Controller extends CI_Controller {
 	}
 	public function index()
 	{
-		$data['title'] = "Infinity Visit | Login";
+		$data['title'] = "Comfort Zone | Login";
 		$link['link'] = array();
 		$script['script'] = array(
 			'assets/js/Login/login_js.php'
@@ -24,6 +24,8 @@ class Login_Controller extends CI_Controller {
 		$check = $this->Custom_model->checkAvailability(USER, $where);
 		if($check > 0) {
 			$this->session->set_userdata('user',$post['email']);
+			$userType = $this->Custom_model->getSingleValue(USER_TYPE,'name','userTypeId = '.$post['user_type']);
+			$this->session->set_userdata('UserType',ucwords(trim($userType)));
 			echo json_encode(array(
 				'success' => true,
 				'message' => 'Successfully Login'

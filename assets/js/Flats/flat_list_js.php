@@ -2,12 +2,12 @@
 var table;
 var Button = function() {
 
-	var user_type_table = function() {
+	var flat_table = function() {
 
 		// begin first table
-		table = $('#List_of_UserType').DataTable({
+		table = $('#List_of_Flats').DataTable({
 			responsive: true,
-            dom: `<'row'<'col-sm-4 text-left'f>>
+            dom: `<'row'<'col-sm-4 text-left'f><'col-sm-8 text-md-right text-center'B>>
             <'row'<'col-sm-12'tr>>
             <'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6 dataTables_pager'lp>>`,
 			buttons: [
@@ -46,37 +46,81 @@ var Button = function() {
             serverSide: true,
             serverMethod: 'post',
 			ajax: {
-				url: "user-types/list",
+				url: "flats/list",
 			},
             columns: [
+                { data: 'Flat No' },
                 { data: 'Name' },
-                { data: 'Create Date' },
+                { data: 'Mobile' },
+                { data: 'Email' },
+                { data: 'No of Person' },
+                { data: 'No of Year To Stay' },
+                { data: 'Owner Business' },
+                { data: 'Created Date' },
                 { data: 'Id' }
             ],
             columnDefs: [
                 {
                     targets: 0,
-                    width:'50px',
-                    title: 'Name',
-                    orderable: true,
-                    // render: function (data, type, full, meta) {
-                    //     return '<a class="nav-link" href="user/details/' + full.Id + '" style="cursor: pointer;">' + data + '</a>';
-                    // },
+                    title: 'Flat No',
+                    orderable: false
                 },
                 {
                     targets: 1,
-                    width:'50px',
-                    title: 'Create Date',
+                    title: 'Name',
                     orderable: true,
                 },
                 {
                     targets: 2,
+                    title: 'Mobile',
                     orderable: false,
-                    width:'50px',
+                },
+                {
+                    targets: 3,
+                    title: 'Email',
+                    orderable: false,
+                },
+                {
+                    targets: 4,
+                    title: 'No of Person',
+                    orderable: false,
+                },
+                {
+                    targets: 5,
+                    width: '100px',
+                    title: 'No of Year To Stay',
+                    orderable: false,
+                },
+                {
+                    targets: 6,
+                    title: 'Business',
+                    orderable: false,
+                },
+                {
+                    targets: 7,
+                    width: '100px',
+                    title: 'Created Date',
+                    orderable: true,
+                },
+                {
+                    targets: 8,
+                    orderable: false,
                     title: 'Actions',
                     render: function(data, type, full, meta){
-                        var html ='<a onClick="Button.deleteUserType(' + data + ')" title="Delete User Type" class="btn btn-icon btn-sm btn-light-danger mr-2"><i class="flaticon2-trash"></i></a>';
-                        // html = html + '<a title="Edit User" href="home/edit/' + data + '" class="btn btn-icon btn-sm btn-light-primary mr-2"><i class="flaticon2-edit"></i></a>';
+                        var html ='<div class="dropdown dropdown-inline">\
+                                <button class="btn btn-icon btn-sm btn-light-primary mr-2" data-toggle="dropdown">\
+                                    <i class="flaticon-more"></i>\
+                                </button>\
+                                <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">\
+                                    <ul class="nav nav-hoverable flex-column">\
+                                        <li class="nav-item">\
+                                        <a onClick="Button.deleteFlat(' + data + ')" title="Delete Flat" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Delete</span></a>\
+                                        </li>\
+                                        <li class="nav-item">\
+                                        <a href="flats/edit/' + data + '" title="Edit Flat" class="nav-link" style="cursor: pointer;"><span class="nav-text text-center">Edit</span></a>\
+                                        </li>\
+                                    </ul>\
+                                </div>';
                         return html;
                     },
                 },
@@ -85,11 +129,11 @@ var Button = function() {
 
 	};
 
-    var deleteUserType = function(id) {
+    var deleteFlat = function(id) {
         var id = id;
         Swal.fire({
                 title: "Are you sure?",
-                text: "You want to delete this user type?",
+                text: "You want to delete this flat?",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes, delete it!",
@@ -98,7 +142,7 @@ var Button = function() {
             }).then(function(result) {
                 if (result.value) {
                     $.ajax({
-                        url: "Settings_Controller/delete_user_type",
+                        url: "flats/delete",
                         type: 'POST',
                         dataType: 'JSON',
                         data: { id:id },
@@ -110,7 +154,7 @@ var Button = function() {
                                     showConfirmButton: false,
                                     timer: 1500
                                 });
-                                $('#List_of_UserType').DataTable().ajax.reload();
+                                $('#List_of_Flats').DataTable().ajax.reload();
                             }
                             else{
                                 Swal.fire({
@@ -130,10 +174,10 @@ var Button = function() {
 
 		//main function to initiate the module
 		init: function() {
-			user_type_table();
+			flat_table();
 		},
-        deleteUserType: function(id) {
-            deleteUserType(id);  
+        deleteFlat: function(id) {
+            deleteFlat(id);  
         },
 	};
 }();

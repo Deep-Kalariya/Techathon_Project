@@ -63,6 +63,12 @@ $route['visitors/add'] = "Visitor_Controller/add_visitor";
 $route['visitor/edit/(:any)'] = "Visitor_Controller/edit_visitor/$1";
 $route['visitor/delete'] = "Visitor_Controller/delete_visitor";
 
+$route['flats'] = "Flat_Controller/index";
+$route['flats/list'] = "Flat_Controller/flats_list";
+$route['flats/add'] = "Flat_Controller/add_flat";
+$route['flats/edit/(:any)'] = "Flat_Controller/edit_flat/$1";
+$route['flats/delete'] = "Flat_Controller/delete_flat";
+
 $route['users'] = "User_Controller/index";
 $route['users/list'] = "User_Controller/users_list";
 $route['user/add'] = "User_Controller/add_user";

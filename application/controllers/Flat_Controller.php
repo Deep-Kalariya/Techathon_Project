@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User_Controller extends CI_Controller {
+class Flat_Controller extends CI_Controller {
 
 	public function __construct()
 	{
@@ -11,10 +11,10 @@ class User_Controller extends CI_Controller {
 	// List View
 	public function index()
 	{
-		$data['title'] = "Comfort Zone | Users";
+		$data['title'] = "Comfort Zone | Flats";
 		$data['link'] = "";
 		$data['script'] = array(
-			'assets/js/Users/users_list_js.php'
+			'assets/js/Flats/flat_list_js.php'
 		);
 		$data['script_link'] = array(
 			'assets/plugins/custom/datatables/datatables.bundle.js'
@@ -22,7 +22,7 @@ class User_Controller extends CI_Controller {
 			
 		if ($this->session->userdata('user')) {
             $this->load->view('header_footer/header',$data);
-			$this->load->view('Users/users');
+			$this->load->view('Flats/flats');
 			$this->load->view('header_footer/footer');
         }
         else{
@@ -30,24 +30,24 @@ class User_Controller extends CI_Controller {
         }
 	}
 
-	public function users_list() 
+	public function flats_list() 
 	{   
         $postData = $this->input->post();
-        $data = $this->User_model->getUsers($postData);
+        $data = $this->Flat_model->getFlats($postData);
         echo json_encode($data);
     }
 
-	public function add_user()
+	public function add_flat()
 	{
 		if($this->session->userdata('user')){
-			$data['title'] = "Comfort Zone | Add User";
+			$data['title'] = "Comfort Zone | Add Flat";
 			$data['link'] = "";
 			$script['script'] = array(
-				'assets/js/Users/add_edit_user_js.php'
+				'assets/js/Flats/add_edit_flat_js.php'
 			);
 			$script['script_link'] = array();
 			$this->load->view('header_footer/header',$data);
-			$this->load->view('Users/add_user');
+			$this->load->view('Flats/add_flat');
 			$this->load->view('header_footer/footer',$script);
 		}
 		else{
@@ -55,43 +55,42 @@ class User_Controller extends CI_Controller {
 		}
 	}
 
-	public function edit_user($id)
+	public function edit_flat($id)
 	{
 		if($this->session->userdata('user')){
-			$data['title'] = "Comfort Zone | Edit User";
+			$data['title'] = "Comfort Zone | Edit Flat";
 			$data['link'] = "";
 			$script['script'] = array(
-				'assets/js/Users/add_edit_user_js.php'
+				'assets/js/Flats/add_edit_flat_js.php'
 			);
 			$script['script_link'] = array();
-			$data1['userData'] = $this->Custom_model->getSingleRow(USER,'userid = '.$id);
+			$data1['userData'] = $this->Custom_model->getSingleRow(FLAT,'flatid = '.$id);
 			$this->load->view('header_footer/header',$data);
-			$this->load->view('Users/add_user',$data1);
+			$this->load->view('Flats/add_flat',$data1);
 			$this->load->view('header_footer/footer',$script);
 		}
 		else{
 			redirect(base_url('login'),'refresh');
 		}
 	}
-
-	public function add_edit_user()
+	
+	public function add_edit_flat()
 	{
 		$post = $this->input->post();
 		if (!empty($post)) {
 			$data = array(
 				'name' => ucwords(trim($post['name'])),
+				'mobileno' => trim($post['mobile']),
 				'email' => trim($post['email']),
-				'mobileNo' => trim($post['mobile']),
-				'password' => trim($post['password']),
-				'userTypeId' => trim($post['user_type']),
-				'flatId' => trim($post['flat_no']),
-				'workingTime' => trim($post['working_time']),
-				'shift' => trim($post['shift'])
+				'flatNo' => trim($post['flat_no']),
+				'noOfYearToStay' => trim($post['no_of_year']),
+				'noOfPerson' => trim($post['no_of_person']),
+				'ownerBusiness' => trim($post['owner_business'])
 			);
 			if ($post['id'] != -1) {
     			$data['modifiedDate'] = date('Y-m-d h:i:s');
-    			$where = array('userid' => $post['id']);
-    			if ($this->Custom_model->updateRow(USER,$data,$where)) {
+    			$where = array('flatid' => $post['id']);
+    			if ($this->Custom_model->updateRow(FLAT,$data,$where)) {
     				$bool = true;
     				$message = "Data updated successfully";
     			}
@@ -103,7 +102,7 @@ class User_Controller extends CI_Controller {
     		else{
     			$data['createdDate'] = date('Y-m-d h:i:s');
     			$data['modifiedDate'] = date('Y-m-d h:i:s');
-    			if ($this->Custom_model->insertRow(USER,$data)) {
+    			if ($this->Custom_model->insertRow(FLAT,$data)) {
     				$bool = true;
     				$message = "Data Inserted Successfully";
     			}
@@ -120,14 +119,14 @@ class User_Controller extends CI_Controller {
 		echo json_encode(array('success' => $bool, 'message' => $message));
 	}
 
-	public function delete_user()
+	public function delete_flat()
     {
     	$id = $this->input->post('id');
-    	$where = array('userid' => $id);
-    	if ($this->Custom_model->deleteRow(USER,$where) == "done") {
+    	$where = array('flatid' => $id);
+    	if ($this->Custom_model->deleteRow(FLAT,$where) == "done") {
     		echo json_encode(array(
     			'success' => true,
-    			'message' => "User deleted successfully"
+    			'message' => "Flat deleted successfully"
     		));
     	}
     	else{

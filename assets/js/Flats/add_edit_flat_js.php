@@ -1,20 +1,13 @@
 <script type="text/javascript">
-var add_visitor_form;
-var Visitor = function () {
+var add_flat_form;
+var Flat = function () {
 	// Private functions
-	var addvisitor = function() {
-		add_visitor_form = FormValidation.formValidation(
-			document.getElementById('add_visitor_form'),
+	var addflat = function() {
+		add_flat_form = FormValidation.formValidation(
+			document.getElementById('add_flat_form'),
 			{
 				fields: {
-					photo: {
-						validators: {
-							notEmpty: {
-								message: 'This field is required'
-							}							
-						}
-					},
-					visitor_name: {
+					name: {
 						validators: {
 							notEmpty: {
 								message: 'This field is required'
@@ -28,17 +21,13 @@ var Visitor = function () {
 							}
 						}
 					},
-					no_of_visitor: {
+					email: {
 						validators: {
 							notEmpty: {
 								message: 'This field is required'
-							}
-						}
-					},
-					whom_to_meet: {
-						validators: {
-							notEmpty: {
-								message: 'This field is required'
+							},
+							emailAddress: {
+								message: 'Email is not valid'
 							}
 						}
 					},
@@ -49,28 +38,21 @@ var Visitor = function () {
 							}
 						}
 					},
-					purpose: {
+					no_of_year: {
 						validators: {
 							notEmpty: {
 								message: 'This field is required'
 							}
 						}
 					},
-					address: {
+					no_of_person: {
 						validators: {
 							notEmpty: {
 								message: 'This field is required'
 							}
 						}
 					},
-					entry_time: {
-						validators: {
-							notEmpty: {
-								message: 'This field is required'
-							}
-						}
-					},
-					visited_date: {
+					owner_business: {
 						validators: {
 							notEmpty: {
 								message: 'This field is required'
@@ -94,20 +76,20 @@ var Visitor = function () {
 	return {
 		// public functions
 		init: function() {
-			addvisitor();
+			addflat();
 		}
 	};
 }();
 
 jQuery(document).ready(function() {
-	Visitor.init();
+	Flat.init();
 	$('#submitbtn').on('click', function(e) {
 		e.preventDefault();
-		add_visitor_form.validate().then(function (state) {
+		add_flat_form.validate().then(function (state) {
 			if (state == "Valid") {
-				var form_data = new FormData($('#add_visitor_form')[0]);
+				var form_data = new FormData($('#add_flat_form')[0]);
 				$.ajax({
-					url: "<?php echo site_url('Visitor_Controller/add_edit_visitor'); ?>",
+					url: "<?php echo site_url('Flat_Controller/add_edit_flat'); ?>",
 					type: 'POST',
 					dataType: 'JSON',
 					data: form_data,
@@ -125,7 +107,7 @@ jQuery(document).ready(function() {
 				         	setTimeout(
 				         	  function() 
 				         	  {
-				         	    window.location.href = "<?php echo base_url('visitors'); ?>";
+				         	    window.location.href = "<?php echo base_url('flats'); ?>";
 				         	  }, 1000);
 						}else{
 							Swal.fire({

@@ -10,7 +10,7 @@ class Dashboard_Controller extends CI_Controller {
 	// List View
 	public function index()
 	{
-		$data['title'] = "Infinity Visit | Dashboard";
+		$data['title'] = "Comfort Zone | Dashboard";
 		$data['link'] = "";
 		$data['script'] = array(
 			// 'assets/js/Dashboard/dashboard_js_min.php'

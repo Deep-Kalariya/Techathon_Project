@@ -11,7 +11,7 @@ class Visitor_Controller extends CI_Controller {
 	// List View
 	public function index()
 	{
-		$data['title'] = "Infinity Visit | Visitor";
+		$data['title'] = "Comfort Zone | Visitor";
 		$data['link'] = "";
 		$data['script'] = array(
 			'assets/js/Visitors/visitor_list_js.php'
@@ -40,7 +40,7 @@ class Visitor_Controller extends CI_Controller {
 	public function add_visitor()
 	{
 		if($this->session->userdata('user')){
-			$data['title'] = "Infinity Visit | Add Visitor";
+			$data['title'] = "Comfort Zone | Add Visitor";
 			$data['link'] = "";
 			$script['script'] = array(
 				'assets/js/Visitors/add_edit_visitor_js.php'
@@ -58,7 +58,7 @@ class Visitor_Controller extends CI_Controller {
 	public function edit_visitor($id)
 	{
 		if($this->session->userdata('user')){
-			$data['title'] = "Infinity Visit | Edit Visitor";
+			$data['title'] = "Comfort Zone | Edit Visitor";
 			$data['link'] = "";
 			$script['script'] = array(
 				'assets/js/Visitors/add_edit_visitor_js.php'

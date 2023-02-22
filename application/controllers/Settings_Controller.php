@@ -11,7 +11,7 @@ class Settings_Controller extends CI_Controller {
 	// List View
 	public function index()
 	{
-		$data['title'] = "Infinity Visit | User Types";
+		$data['title'] = "Comfort Zone | User Types";
 		$data['link'] = "";
 		$data['script'] = array(
 			'assets/js/Settings/user_type_list_js.php'
@@ -40,7 +40,7 @@ class Settings_Controller extends CI_Controller {
 	public function add_user_type()
 	{
 		if($this->session->userdata('user')){
-			$data['title'] = "Infinity Visit | Add User Type";
+			$data['title'] = "Comfort Zone | Add User Type";
 			$data['link'] = "";
 			$script['script'] = array(
 				'assets/js/Settings/add_user_type_js.php'

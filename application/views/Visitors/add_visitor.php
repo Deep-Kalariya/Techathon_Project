@@ -89,16 +89,16 @@
                                 <input type="time" class="form-control" name="entry_time" id="entry_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->entryTime != '') ? date('h:i', strtotime($userData->entryTime)) : date('h:i')) : date('h:i'); ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
+                                <label>Visited Date</label>
+                                <input type="date" class="form-control" name="visited_date" id="visited_date" value="<?= (strpos(current_url(), 'edit')) ? (($userData->visitedDate != '') ? $userData->visitedDate : date('Y-m-d', time())) : date('Y-m-d', time()); ?>" />
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Exit Time</label>
                                 <input type="time" class="form-control" name="exit_time" id="exit_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->exitTime != '') ? date('h:i', strtotime($userData->exitTime)) : '') : ''; ?>" />
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12 py-3">
                                 <label>Out Time</label>
                                 <input type="time" class="form-control" name="out_time" id="out_time" value="<?= (strpos(current_url(), 'edit')) ? (($userData->outTime != '') ? date('h:i', strtotime($userData->outTime)) : '') : ''; ?>" />
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12 py-3">
-                                <label>Visited Date</label>
-                                <input type="date" class="form-control" name="visited_date" id="visited_date" value="<?= (strpos(current_url(), 'edit')) ? (($userData->visitedDate != '') ? $userData->visitedDate : date('Y-m-d', time())) : date('Y-m-d', time()); ?>" />
                             </div>
                         </div>
                         <div class="text-right">

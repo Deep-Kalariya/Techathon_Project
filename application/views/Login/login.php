@@ -41,8 +41,8 @@
 						<!--begin::Login Header-->
 						<div class="d-flex flex-center mb-15">
 							<a href="<?php echo base_url('login') ?>">
-								<!-- <img src="<?php echo base_url(); ?>/assets/media/logo/login_logo.png" class="h-auto w-75" alt="Logo" /> -->
-								<h1>Infinity Visit Login</h1>
+								<img src="<?php echo base_url(); ?>/assets/media/logo/header.png" class="h-auto w-75 bg-white rounded" alt="Logo" />
+								<!-- <h1>Infinity Visit Login</h1> -->
 							</a>
 						</div>
 						<!--end::Login Header-->
